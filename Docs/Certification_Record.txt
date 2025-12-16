@@ -1,0 +1,29 @@
+Certification Record
+====================
+
+State:
+CERTIFIED — RELEASE CANDIDATE APPROVED
+
+Date:
+2025-12-16
+
+Certifying Authority:
+Atlas (Chief of Staff)
+
+Approval Authority:
+Commander
+
+Scope:
+AtlasChat v1.0 — Browser Extension (Manifest v3)
+Prompt Governance (PME / PMD)
+Domains: General, Engineering, Research
+State Scope: NONE / LIGHT
+No backend services
+No prompt or response storage
+
+Notes:
+- All Phase 1–4 checklist items completed and verified
+- Phase 5 Release Candidate approved
+- Known Issue KI-001 (syntax highlighting console warnings) accepted as cosmetic
+- Documentation suite hardened and aligned to working baseline
+- v1.0_Working_Baseline approved for freeze upon Commander sign-off

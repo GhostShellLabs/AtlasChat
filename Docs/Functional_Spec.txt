@@ -1,0 +1,121 @@
+AtlasChat — Functional Specification
+Document ID: AC-DOC-FSPEC
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Purpose
+AtlasChat is a browser extension that provides a lightweight governance layer for sending prompts to ChatGPT.
+It introduces two user-selectable operating modes:
+
+- Guard Mode: wraps user input with a policy wrapper (prompt optimization / safety framing) before sending.
+- Direct Mode: sends exactly what the user typed (no rewriting).
+
+Goal: increase consistency, safety, and repeatability of the user’s interactions without breaking normal ChatGPT UX.
+
+2. Scope
+In scope (v1.0.0 baseline):
+- Runs as a Chromium extension (Manifest V3).
+- Activates only on ChatGPT web domains.
+- Intercepts “Enter” (without Shift) at CAPTURE phase to govern sends.
+- Popup UI to toggle enabled/disabled and Guard/Direct mode.
+- Background service worker applies the selected mode to the outgoing text.
+- Fail-safe: if anything fails, user can still send normally (non-breaking).
+
+Out of scope (explicitly NOT in baseline):
+- Persistent storage of conversations, transcripts, or user content beyond in-flight processing.
+- Server-side processing; AtlasChat is local-only.
+- Account/session management.
+- Any claim of compliance (CUI, HIPAA, FedRAMP, etc.). Future features may support compliance overlays.
+
+3. Users, Roles, and Operating Assumptions
+Primary user: Commander (power user).
+Secondary users: testers (non-admin).
+
+Assumptions:
+- Users understand that Guard Mode changes the prompt text (by design).
+- Users can disable AtlasChat at any time.
+- Extension must never cause message loss without an obvious user action.
+
+4. Functional Requirements
+
+FR-1 Domain Gating
+- AtlasChat MUST only activate on ChatGPT domains (e.g., https://chat.openai.com, and any configured ChatGPT web host).
+- If domain check fails, it MUST do nothing.
+
+FR-2 Send Intercept (Enter Key)
+- When enabled, AtlasChat MUST intercept Enter (no Shift) in the prompt editor.
+- It MUST prevent the default send, process the prompt, then trigger send with processed text.
+
+FR-3 Click-to-Send (Arrow Button)
+- AtlasChat MUST also handle mouse/touch “send button” clicks (arrow UI), so behavior matches Enter-to-send.
+
+FR-4 Mode Handling
+- Guard Mode MUST wrap the user prompt using the current Guard wrapper defined in background.js.
+- Direct Mode MUST pass through the user prompt unchanged.
+
+FR-5 State Persistence
+- Enabled flag and mode MUST persist across browser restarts using chrome.storage.local.
+  Keys (authoritative):
+  - atlasChatEnabled (boolean)
+  - atlasChatMode ("guard" | "direct")
+
+FR-6 UX Feedback
+- Popup MUST show:
+  - current enabled state
+  - current mode
+- Popup MUST allow toggling enabled and switching modes.
+
+FR-7 Failure Containment
+- Any exception during intercept/processing MUST:
+  - surface a non-blocking console warning/error
+  - fall back to normal ChatGPT behavior (do not brick the input box)
+- If state cannot be read, defaults MUST be:
+  - enabled: false
+  - mode: "guard"
+
+FR-8 Non-Destructive by Default
+- AtlasChat MUST not modify any ChatGPT settings, account data, or local browser settings unrelated to itself.
+
+5. Non-Functional Requirements
+
+NFR-1 Performance
+- No polling loops that run continuously without backoff.
+- DOM watchers MUST be bounded (attempt caps) and released when not needed.
+- Processing MUST be fast enough to feel instant (< 150ms typical).
+
+NFR-2 Reliability
+- Must tolerate ChatGPT DOM changes (defensive selectors + graceful fallback).
+- Must avoid duplicate sends (idempotence guard).
+
+NFR-3 Privacy / Data Handling
+- User input is processed locally in memory.
+- No network exfiltration of prompt content.
+- No logs containing full prompt content by default.
+
+NFR-4 Security
+- Least privilege permissions in manifest.json.
+- No remote code execution, no dynamic eval, no external script injection.
+
+6. Acceptance Criteria (Definition of Done alignment)
+A build is “Done” when:
+- Guard and Direct modes work with both Enter-to-send and click-to-send.
+- Disable switch reliably bypasses all interception.
+- No double-send or lost-send scenarios in standard usage.
+- Basic test suite is executed and recorded in Test_Validation_Record.txt.
+- Deploy/Rollback guide is current and usable by a new operator.
+
+7. Known Issues (Cosmetic)
+- Cosmetic/UI/labeling inconsistencies are permitted if they do not change behavior or safety.
+- Known cosmetic issues MUST be logged in Commander Checklist as “Known Issue (Cosmetic)” with a short note and date.
+
+8. Open Items / Future Enhancements (non-binding)
+- “CUI Mode” overlay and session-scoped context destruction.
+- Per-site allowlist settings if additional LLM web UIs are supported.
+- Optional on-device audit log with redaction controls.

@@ -1,0 +1,36 @@
+AtlasChat — Risk and Threat Model
+Document ID: AC-DOC-RISK
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Assets
+- User prompt content (confidentiality)
+- Correct mode behavior (integrity)
+- Browser/user workflow (availability)
+- Extension code integrity
+
+2. Trust Boundaries
+- Browser ↔ ChatGPT UI (3rd-party DOM)
+- Content ↔ Background messaging boundary
+- Local persistence (chrome.storage.local)
+
+3. Threats & Mitigations (STRIDE)
+Spoofing: strict domain gating.
+Tampering: defensive selectors; if unsure do nothing.
+Repudiation: explicit UI mode; optional future redacted audit.
+Information disclosure: no prompt logging/persistence beyond in-flight.
+DoS: always release locks; bypass switch always available.
+Elevation of privilege: least-privilege manifest permissions; review any adds.
+
+4. Baseline Risk Register
+- DOM drift → defensive selectors + bypass.
+- Click-to-send mismatch → explicit click handler support.
+- Double-send → idempotence guards + regression tests.
+- Prompt leakage → policy: no content logs, no network calls.

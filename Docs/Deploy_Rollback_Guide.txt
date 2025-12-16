@@ -1,0 +1,35 @@
+AtlasChat — Deploy and Rollback Guide
+Document ID: AC-DOC-DEPLOY
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Distribution Modes
+- Unpacked (dev/test): preferred
+- Zip for testers (load unpacked)
+- Store release (future/optional)
+
+2. Pre-Ship Checklist
+- manifest.json version correct
+- Version_Info updated
+- Test_Validation_Record updated
+- Commander Checklist reviewed
+- no secrets/tokens/test data
+
+3. Rollback
+Fastest: toggle OFF in popup.
+If needed: disable/remove extension, reload tab.
+If needed: restore last known-good build folder/zip and re-load unpacked.
+
+4. Incident Handling
+If privacy/stability/integrity is impacted:
+- freeze distribution
+- rollback immediately
+- record incident in checklist
+- patch + re-validate

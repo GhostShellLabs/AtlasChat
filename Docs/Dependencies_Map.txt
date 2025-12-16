@@ -1,0 +1,15 @@
+ATLASCHAT — DEPENDENCIES MAP
+===========================
+
+Internal:
+- popup.js → background.js
+- content.js → background.js
+
+External:
+- Chrome Runtime API
+- Chrome Storage API
+- Host DOM
+
+Non-dependencies:
+- No backend
+- No external libs

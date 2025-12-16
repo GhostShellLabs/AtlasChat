@@ -1,0 +1,82 @@
+AtlasChat — Interfaces and Contracts
+Document ID: AC-DOC-INTERF
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Purpose
+Define the concrete interfaces between AtlasChat components (popup ↔ background ↔ content), their message contracts,
+and the internal storage schema. This is the “do not break” contract doc.
+
+2. Components
+- popup.html / popup.js: user controls (enabled + mode), displays current state.
+- background.js: service worker; source of truth for state; performs Guard wrapper application.
+- content.js: page-side controller; intercepts send; requests processing from background; updates DOM and triggers send.
+
+3. Storage Contract (chrome.storage.local)
+Authoritative keys (case-sensitive):
+- atlasChatEnabled: boolean
+- atlasChatMode: "guard" | "direct"
+
+Defaults:
+- atlasChatEnabled = false
+- atlasChatMode = "guard"
+
+4. Runtime Messaging Contract (chrome.runtime.sendMessage)
+All messages are JSON objects with:
+- type: string (required)
+- payload: object (optional)
+
+Message Types (authoritative)
+A) Popup → Background
+- ATLASCHAT_GET_STATE
+  Response: { ok: true, enabled: boolean, mode: "guard"|"direct" }
+
+- ATLASCHAT_TOGGLE
+  Payload: { enabled: boolean }
+  Response: { ok: true, enabled, mode }
+
+- ATLASCHAT_SET_MODE
+  Payload: { mode: "guard"|"direct" }
+  Response: { ok: true, enabled, mode }
+
+B) Content → Background
+- ATLASCHAT_PROCESS_PROMPT
+  Payload: { text: string, mode?: "guard"|"direct" }
+  Response:
+    Success: { ok: true, text: string, mode: "guard"|"direct" }
+    Failure: { ok: false, error: string }
+
+C) Error Notification (optional)
+- ATLASCHAT_PIPELINE_ERROR
+  Payload: { stage: string, error: string }
+
+5. Guard Wrapper Contract (Behavioral)
+Guard Mode MUST:
+- preserve user intent
+- make the request internally consistent
+- avoid adding new meaning or expanding scope
+- if questions are required, embed them as TODOs inside the optimized prompt
+- output exactly one markdown code block (unless the wrapper explicitly chooses otherwise)
+
+6. DOM / UI Contracts (Content Script)
+- Prompt element discovery must be defensive (DOM changes expected).
+- Send triggering must support Enter-to-send and click-to-send.
+- Non-breaking constraint: if uncertain, do nothing and allow normal use.
+
+7. Idempotence / Concurrency
+- Only one prompt interception processed at a time (isProcessing lock).
+- Release locks in finally blocks.
+- Prevent re-intercepting synthetic sends (skipNextIntercept or equivalent).
+
+8. Backward Compatibility
+If you change storage keys, message types, wrapper invariants, or permissions:
+- increment product version
+- update Version_Info.txt
+- update Test_Validation_Record.txt with regression results

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AtlasChat Control Panel</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="root">
+    <header>
+      <span id="brand">AtlasChat</span>
+      <span id="status-pill" class="status-off">Disengaged</span>
+    </header>
+
+    <main>
+      <button id="toggle-btn" class="btn-off">
+        Engage AtlasChat
+      </button>
+
+      <section id="mode-section">
+        <div id="mode-header-row">
+          <span id="mode-label">Mode</span>
+          <span id="mode-value" class="mode-value">Guard</span>
+        </div>
+        <div id="mode-toggle" class="mode-toggle">
+          <button id="mode-guard" class="mode-segment mode-active">Guard</button>
+          <button id="mode-direct" class="mode-segment">Direct</button>
+        </div>
+        <p class="mode-hint">
+          Guard: generates an optimized prompt (no execution). Direct: sends exactly what you type.
+        </p>
+      </section>
+
+      <section id="summary">
+        <p class="hint">
+          When engaged, AtlasChat will govern your AI interactions according
+          to your configured modes and domains.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

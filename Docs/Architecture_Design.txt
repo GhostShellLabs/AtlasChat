@@ -1,0 +1,37 @@
+ATLASCHAT — ARCHITECTURE & DESIGN
+================================
+
+Baseline: v1.0_Working_Baseline (LOCKED)
+Authoritative Source: AtlasChat Master Design & Execution Doc v1.4
+Last Hardened: 2025-12-16
+
+1. PURPOSE
+----------
+Defines internal architecture, component responsibilities, and data flow
+for AtlasChat v1.0.
+
+2. CORE COMPONENTS
+-----------------
+- popup.js      : User control surface
+- background.js : Governance + routing engine
+- content.js    : Host page integration
+
+3. DATA FLOW
+------------
+User → content.js → background.js → content.js → Host Send
+
+Post-submit rewrite is permitted for v1.0 compatibility.
+
+4. STABILITY MODEL
+-----------------
+- Release-before-init enforced
+- Hard timeout fail-open behavior
+- SPA navigation safe
+
+5. ISOLATION
+------------
+- Runtime domain-limited
+- No backend services
+- No prompt/response storage
+
+END

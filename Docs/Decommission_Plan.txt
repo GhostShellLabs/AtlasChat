@@ -1,0 +1,9 @@
+ATLASCHAT — DECOMMISSION PLAN
+==============================
+
+1. Disable extension
+2. Uninstall extension
+3. Browser clears all metadata
+4. No residual data exists
+
+Safe mid-session teardown guaranteed.

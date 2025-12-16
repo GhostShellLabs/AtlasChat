@@ -1,0 +1,30 @@
+AtlasChat — Version Information
+Document ID: AC-DOC-VERS
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Product Version
+Current: 1.0.0
+Scheme: Semantic Versioning (MAJOR.MINOR.PATCH)
+
+2. Docs Suite Version
+Docs Suite: v1.0
+
+3. Contract Break Triggers
+- storage keys: atlasChatEnabled / atlasChatMode
+- message types: ATLASCHAT_*
+- manifest permissions/host matches
+- send interception semantics
+
+4. Docs Change Log
+[2025-12-16] Hardened docs: Functional Spec, Interfaces/Contracts, Module Overview, Ops Guide, Ownership, Risk, Test, Deploy/Rollback, Version Info.
+
+5. Product Change Log (Fill-in)
+- YYYY-MM-DD: vX.Y.Z — summary

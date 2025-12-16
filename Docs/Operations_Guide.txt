@@ -1,0 +1,42 @@
+AtlasChat — Operations Guide
+Document ID: AC-DOC-OPS
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Purpose
+Operational runbook for installing, verifying, troubleshooting, and supporting AtlasChat.
+
+2. Supported Environments
+- Chrome / Edge (Manifest V3)
+- ChatGPT web app in desktop browser
+
+3. Install (Load Unpacked)
+1) Open extensions page (chrome://extensions or edge://extensions)
+2) Enable Developer Mode
+3) Load unpacked → select AtlasChat folder (contains manifest.json)
+
+4. Quick Smoke Test
+A) Disabled: toggle OFF → send → normal behavior
+B) Guard: toggle ON + guard → send via Enter → wrapper applied
+C) Direct: toggle ON + direct → send via Enter → exact text
+D) Repeat B/C using click-to-send arrow
+
+5. Troubleshooting
+- Toggle OFF to bypass if anything feels wrong.
+- Reload the ChatGPT tab.
+- Open DevTools Console and filter “AtlasChat”.
+
+6. Safe Recovery
+- Disable/remove extension and reload.
+- Roll back to last known-good folder/zip and re-load unpacked.
+
+7. Operator Reminders
+- Do not paste sensitive data into prompts.
+- Guard Mode changes outbound text by design; Direct Mode is pass-through.

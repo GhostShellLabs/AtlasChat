@@ -1,0 +1,62 @@
+AtlasChat — Test and Validation Record
+Document ID: AC-DOC-TEST
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+Minimum Matrix
+Browsers: Chrome stable, Edge stable
+Flows:
+- Disabled (Enter + click)
+- Guard (Enter + click)
+- Direct (Enter + click)
+- Toggle enabled mid-session
+- Switch modes mid-session
+- Restart browser → verify persistence
+- Error handling/fail-safe check
+
+Test Cases
+TC-001 Install (Load Unpacked) → PASS/FAIL
+TC-002 Disabled bypass → PASS/FAIL
+TC-003 Guard + Enter → PASS/FAIL
+TC-004 Direct + Enter → PASS/FAIL
+TC-005 Guard + Click → PASS/FAIL
+TC-006 Direct + Click → PASS/FAIL
+TC-007 Persistence → PASS/FAIL
+TC-008 Fail-safe → PASS/FAIL
+
+Latest Run (Completed)
+
+Date:
+2025-12-16
+
+Tester:
+Commander
+
+Browser / Version:
+Google Chrome 143.0.7499.110
+
+OS:
+Windows 11
+
+Build / Commit:
+AtlasChat v1.0_Working_Baseline
+(Release Candidate — post Phase 3 & Phase 4 hardening)
+
+Results:
+PASS
+
+Notes / Defects:
+- All functional, integration, and hardening tests passed.
+- Guard Mode (PME) and Direct Mode (PMD) verified under normal and edge conditions.
+- Enable/disable lifecycle stable; no stuck states or listener duplication observed.
+- Known Issue KI-001: Console warnings related to syntax highlighting of fenced code blocks
+  (e.g., missing language identifiers such as 'mark', 'markdown').
+  Classified as COSMETIC ONLY. No impact to execution, stability, or user workflow.
+

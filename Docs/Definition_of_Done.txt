@@ -1,0 +1,117 @@
+============================================================
+ATLASCHAT — v1.0 DEFINITION OF DONE (DoD)
+Status: FINAL / SHIP-GATE AUTHORITY
+Date: 2025-12-16
+Source Baseline: AtlasChat Master Design & Execution Doc v1.4 (Working Baseline)
+============================================================
+
+PURPOSE
+-------
+This document is the ship gate for AtlasChat v1.0. A build is “Done” only when
+all scope, acceptance criteria, verification checks, and deliverables below
+are satisfied. Any additions beyond this DoD are deferred to v1.1+ (or Design Notes).
+
+------------------------------------------------------------
+1) SCOPE LOCK
+------------------------------------------------------------
+
+IN-SCOPE (MUST SHIP)
+- Chrome extension UI:
+  • Popup UI
+  • Icons / state indicators
+  • Enable/Disable toggle
+  • Mode control (Guard / Direct)
+- Guard Mode behavior rules (Prompt rewrite governance)
+- Direct Mode behavior rules (No rewrite)
+- Mode persistence via Chrome Storage (MV3)
+- Message/event pipeline:
+  • Intercept → Process → Inject → Send
+- Runtime domain restriction:
+  • Operates only on chat.openai.com / chatgpt.com (content script exits otherwise)
+- Isolation rule:
+  • AtlasChat remains isolated; no coupling to ATE or other GS Labs products
+
+OUT-OF-SCOPE (MUST NOT ENTER v1.0)
+- Firefox / Safari support
+- Backend services
+- Mobile support
+- Multi-user / accounts system
+- Any “Copy/Download/Execute” UI bar or test harness UI
+- New feature concepts not required by this DoD (defer to v1.1+)
+
+------------------------------------------------------------
+2) ACCEPTANCE CRITERIA (SHIP GATES)
+------------------------------------------------------------
+
+A) GUARD MODE (PME) — MUST BE TRUE
+- Produces deterministic, execution-ready prompts.
+- Preserves user intent and tone; resolves ambiguity/contradictions.
+- Does NOT add meaning/content or expand scope.
+- Does NOT inject lectures or meta commentary into the user’s request.
+- Compatible with the v1 “post-submit rewrite” behavior (allowed for v1).
+
+B) DIRECT MODE (PMD) — MUST BE TRUE
+- Sends exactly what the user typed (no rewrite, no wrapper, no governance prompt).
+- Only minimal validation is allowed for empty/corrupted/unparseable input.
+- Fails gracefully without breaking the page, send pipeline, or user workflow.
+
+C) STABILITY / HARDENING — MUST BE TRUE
+- No “stuck in Guard Mode” / lock behavior.
+- Lifecycle is idempotent:
+  • Release-before-init on enable/disable
+  • Release-before-init on mode switch
+  • Release-before-init on SPA route changes
+  • Release-before-init after errors
+- Hard timeout exists:
+  • If rewrite stalls, original text sends unmodified.
+- No listener stacking / no duplicate intercepts after navigation or toggles.
+
+D) DOMAIN / ISOLATION RULES — MUST BE TRUE
+- Runs only on ChatGPT domains (as above).
+- No cross-project coupling (AtlasChat stays self-contained).
+
+------------------------------------------------------------
+3) VERIFICATION CHECKLIST (MINIMUM PASS SET)
+------------------------------------------------------------
+
+A build is “Done” only if ALL tests pass:
+
+- Toggle abuse test:
+  • Guard ↔ Direct ↔ Disabled cycles repeatedly without lock or degradation.
+- SPA navigation stress:
+  • Route changes do not stack listeners; behavior remains stable.
+- Forced rewrite timeout test:
+  • Timeout triggers; original text sends; system does not deadlock.
+- Mode persistence:
+  • Reload tab/browser; selected mode persists correctly and behaves correctly.
+
+------------------------------------------------------------
+4) RELEASE DELIVERABLES
+------------------------------------------------------------
+
+Must be present at ship time:
+
+- Installable Chrome extension package (MV3) with working:
+  • Popup
+  • Toggles
+  • Mode control
+  • Icon states
+- Short governance guide:
+  • Plain-English explanation of Guard vs Direct
+  • What users should expect in each mode
+- Known-issues section:
+  • Lists any limitations that remain (if any), with workarounds or notes.
+
+------------------------------------------------------------
+5) VERSION / CHANGE CONTROL
+------------------------------------------------------------
+
+- This DoD is authoritative for v1.0.
+- Any changes require:
+  • Explicit Commander approval
+  • Versioned update
+  • Changelog entry
+
+============================================================
+END OF ATLASCHAT v1.0 DoD (FINAL)
+============================================================

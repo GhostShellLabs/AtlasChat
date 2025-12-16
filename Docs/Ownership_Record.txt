@@ -1,0 +1,32 @@
+AtlasChat — Ownership Record
+Document ID: AC-DOC-OWN
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Product Ownership
+- Final Authority: Commander (GhostShell)
+- Maintainer: Atlas (Chief of Staff)
+- Testers: designated by Commander (no commit authority unless granted)
+
+2. Code Ownership
+- background.js: policy + state (wrapper changes require Commander approval)
+- content.js: intercept behavior (behavior changes require Commander approval)
+- popup.*: UI (feature additions require Commander approval)
+
+3. Release Authority
+- Internal/test builds: Commander
+- Public releases: Commander + completion of DoD + Ship Plan gates
+
+4. Maintenance Rules
+Any change that touches behavior/contracts/permissions must:
+- bump version (if appropriate)
+- update Version_Info.txt
+- update Test_Validation_Record.txt
+- log status in Commander Checklist

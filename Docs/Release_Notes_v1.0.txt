@@ -1,0 +1,130 @@
+ATLASCHAT v1.0 — RELEASE NOTES
+==============================
+
+Release Date:
+2025-12-16
+
+Status:
+CERTIFIED • FROZEN • WORKING BASELINE
+
+----------------------------------------------------------------
+OVERVIEW
+----------------------------------------------------------------
+AtlasChat v1.0 is a governance-first browser extension designed to help users
+interact with powerful AI systems deliberately, visibly, and responsibly.
+
+AtlasChat does NOT replace AI models or platforms.
+It governs how users interact with them at the UI boundary.
+
+This release establishes a hardened, auditable baseline focused on safety,
+clarity, and user intent — without backend services or data storage.
+
+----------------------------------------------------------------
+CORE FEATURES
+----------------------------------------------------------------
+
+Prompt Governance Modes
+-----------------------
+• PME (Prompt Mode Enhanced) — Default
+  - Clarifies and rewrites user intent
+  - Produces execution-ready prompts
+  - Does NOT execute requests
+
+• PMD (Prompt Mode Direct)
+  - Sends user prompts exactly as written
+  - Explicit user intent required
+  - No rewriting, no interference
+
+Modes are mutually exclusive and always visible.
+
+Domain Modes
+------------
+• General
+• Engineering
+• Research
+
+Domains influence rigor, structure, and response expectations.
+
+State Scope
+-----------
+• NONE
+  - No persistence
+
+• LIGHT (Default)
+  - Metadata only:
+    - Last mode
+    - Last domain
+    - Timestamps
+    - Enforcement events
+
+AtlasChat v1.0 does NOT store:
+• Prompt content
+• Response content
+• Conversation history
+
+----------------------------------------------------------------
+ARCHITECTURE SUMMARY
+----------------------------------------------------------------
+• Browser extension (Chrome / Edge)
+• Manifest v3
+• No backend services
+• No external libraries
+• Governance enforced before prompts leave the browser
+• Fail-open safety model (user intent always wins)
+
+----------------------------------------------------------------
+WHAT ATLASCHAT IS NOT
+----------------------------------------------------------------
+• Not an AI model
+• Not a chatbot competitor
+• Not a compliance accreditation or ATO
+• Not a secure storage or enclave
+• Not a replacement for approved systems
+
+AtlasChat governs user behavior — not vendor infrastructure.
+
+----------------------------------------------------------------
+KNOWN ISSUES
+----------------------------------------------------------------
+KI-001 — Cosmetic Console Warnings
+
+Description:
+Console warnings related to syntax highlighting of streamed fenced code blocks
+(e.g., missing language identifiers such as 'mark' or 'markdown').
+
+Impact:
+Cosmetic only.
+No effect on execution, stability, or user workflow.
+
+Status:
+Accepted for v1.0.
+
+----------------------------------------------------------------
+CERTIFICATION & GOVERNANCE
+----------------------------------------------------------------
+• All Phase 1–4 checklist items completed
+• Documentation suite hardened and aligned to implementation
+• Release Candidate approved
+• v1.0_Working_Baseline FROZEN
+
+Any future changes require a new version and certification cycle.
+
+----------------------------------------------------------------
+LOOKING AHEAD
+----------------------------------------------------------------
+Planned future work (not included in v1.0):
+• Expanded State Scope (FULL)
+• Compliance overlays (e.g., CUI Mode)
+• Pro-tier capabilities
+• Additional browsers and platforms
+
+----------------------------------------------------------------
+FINAL NOTE
+----------------------------------------------------------------
+AtlasChat exists to make the *safe path the easy path*.
+
+It allows individuals and organizations to say:
+“We use AI deliberately, visibly, and responsibly.”
+
+END OF RELEASE NOTES
+==============================

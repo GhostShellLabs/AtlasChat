@@ -1,0 +1,10 @@
+ATLASCHAT — CONFIGURATION REFERENCE
+================================
+
+ac_enabled (bool)  default=false
+ac_mode (string)  guard | direct (default=guard)
+ac_domain (string) general | engineering | research
+
+Storage: chrome.storage.local (metadata only)
+
+Invalid state always fails open to Direct Mode.

@@ -1,0 +1,54 @@
+AtlasChat — Module Overview
+Document ID: AC-DOC-MOD
+Document Version: v1.0
+Product Version: 1.0.0
+Docs Suite: v1.0
+Status: Working Baseline (Hardened)
+Last Updated: 2025-12-16
+Owner: GhostShell Labs (Commander); Maintainer: Atlas (Chief of Staff)
+
+======================================================================
+
+
+1. Purpose
+Describe the AtlasChat extension modules, responsibilities, and data flow at a level suitable for maintenance and onboarding.
+
+2. Module Inventory (v1.0.0)
+- manifest.json: MV3 metadata, permissions, host matches, entry points.
+- background.js: state + Guard wrapper application; message router.
+- content.js: DOM interception (Enter + click); inject processed text; fail-safe.
+- popup.html / popup.js / popup.css: UI controls; state display; commands.
+
+3. Persisted State (chrome.storage.local)
+- atlasChatEnabled: boolean
+- atlasChatMode: "guard" | "direct"
+
+4. In-Memory Runtime State (content.js)
+- promptEl (DOM ref)
+- isProcessing (lock)
+- skipNextIntercept (idempotence)
+- bounded prompt watcher timers + attempt counters
+
+5. Data Flow (Happy Path)
+1) User sends (Enter or click)
+2) content.js intercepts
+3) content.js → background.js: ATLASCHAT_PROCESS_PROMPT
+4) background.js returns processed text
+5) content.js injects text + triggers send
+6) release lock
+
+6. Failure Behavior
+- If prompt editor cannot be found → do nothing.
+- If background fails → do nothing or allow fallback.
+- If injection fails → warn, release lock, allow retry.
+
+7. Design Invariants
+- Non-breaking, non-destructive.
+- No prompt-content logging by default.
+- Clear separation: background=policy/state; content=DOM; popup=UI.
+
+8. Maintenance Notes
+When ChatGPT DOM changes break selectors:
+- patch content.js selectors defensively
+- add regression test
+- record in checklist + version info
